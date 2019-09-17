@@ -16,7 +16,7 @@ float[] panelY = {806,862,832,832,862,832,802,802,860,860,830,955,801,831,929};
 
 void setup() 
 {
-  frameRate(50);
+  //frameRate(50);
   fullScreen(P2D);
   initTime = millis();
   initPath = millis();
@@ -36,8 +36,8 @@ void draw()
     lives[i].spawnLife(panelX[i], panelY[i]);
   }
   
-  n = random(1300, width-30);
-  m = random(30, height-30);
+  n = random(1450, width-180);
+  m = random(330, height-330);
   
   // Spawn new balls randomly 
   if (millis() - initTime > interval) {
@@ -49,9 +49,9 @@ void draw()
   // Create new balls and check for collisions 
   for (int i = balls.size()-1; i >= 0; i--) {  
      Ball b = balls.get(i);
-     b.create();
-     b.fall();
-      
+      b.create();
+      b.fall();
+    
      // CHeck for collisions
      if (myShip.collision(b) && b.isCollide == false) {
        r = 160;
@@ -70,9 +70,9 @@ void draw()
   // If reached end of lives, reset
   if (lifeCount == 15) {
      lifeCount = 0;
-     r = -200;
-     g = -200;
-     blu = -200;
+     r = -400;
+     g = -400;
+     blu = -400;
    
      for (int j = 0; j < 15; j++) {
        lives[j].c = color(0,255,0);
@@ -97,5 +97,4 @@ void draw()
   // Create ship 
   myShip.create();  
   myShip.move();  
-  
 }

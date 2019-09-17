@@ -1,7 +1,6 @@
 class Ball {
   PVector position;
   float x, y;
-  float easing = 0.1;
   float targetX, targetY;
   float dx, dy;
   float radius;
@@ -17,17 +16,16 @@ class Ball {
     history = new ArrayList<PVector>();
     direction = 1;
     isCollide = false;
-
     c = color(random(255), random(255), random(255));
   }
   
   void fall() {
     if (random(100) > 50) {
        if (millis() - initPath > pathInterval) {
-           targetX = random(-8,8);
-           targetY = random(-12,12);
+           targetX = random(-6,6);
+           targetY = random(-9,9);
            initPath = millis();
-           pathInterval = random(500,2000);
+           pathInterval = random(500,1500);
        }
     }
     else {
@@ -47,9 +45,13 @@ class Ball {
     
     for (int i = 0; i < history.size(); i++) {
       PVector current = history.get(i);
-      if (current.y > height + radius || current.y < -radius) {
+      if (current.y > height+radius || current.y < -radius) {
         history.remove(i);
       }
+    }
+    
+    if (history.size() > 80) {
+      history.remove(0);
     }
     
     if (position.x > width - radius || position.x < 1268 + radius) {
@@ -58,14 +60,16 @@ class Ball {
   }
   
   void create() {
-   pushStyle();
-   fill(c);
-   ellipse(position.x, position.y, radius*2, radius*2);
-   popStyle();
+   if (position.y > -radius && position.y < height + radius) {
+     pushStyle();
+     fill(c);
+     ellipse(position.x, position.y, radius*2, radius*2);
+     popStyle();
+   }
    
-   for (int i = 0; i < history.size(); i += 2) {
+   for (int i = 0; i < history.size(); i += 4) {
       PVector current = history.get(i);
-      fill(c, i/2);
+      fill(c, i*2);
       ellipse(current.x, current.y, radius*2, radius*2);
    }
   }
